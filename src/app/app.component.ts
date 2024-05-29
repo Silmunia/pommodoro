@@ -13,4 +13,8 @@ export class AppComponent {
 
   countdownMinutes = (0).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false});
   countdownSeconds = (0).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false});
+
+  startCounter() {
+    console.log("Start");
+  }
 }
