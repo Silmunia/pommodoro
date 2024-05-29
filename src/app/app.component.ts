@@ -9,5 +9,35 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'pommodoro';
+  title = 'Pommodoro';
+
+  countdownValue = 120;
+  counterInterval: NodeJS.Timeout | undefined;
+
+  displayCounter = this.setDisplayCounter(this.countdownValue);;
+
+  public startCounter() {
+    console.log("Start counter");
+    this.counterInterval = setInterval(() => {
+      console.log("Count down");
+      this.countdownValue -= 1;
+
+      if (this.countdownValue === 0) {
+        clearInterval(this.counterInterval);
+      }
+  
+      this.displayCounter = this.setDisplayCounter(this.countdownValue);
+    }, 1000);
+  }
+
+  public setDisplayCounter(secondsRemaining: number): string {
+    const countdownMinutes = Math.floor(secondsRemaining / 60);
+    const countdownSeconds = secondsRemaining - 60*countdownMinutes;
+
+    const displayCounterMinutes = countdownMinutes.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false});
+
+    const displayCounterSeconds = countdownSeconds.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false});
+
+    return `${displayCounterMinutes}:${displayCounterSeconds}`;
+  }
 }
