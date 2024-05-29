@@ -10,4 +10,7 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'Pommodoro';
+
+  countdownMinutes = (0).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false});
+  countdownSeconds = (0).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false});
 }
