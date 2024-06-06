@@ -1,1 +1,7 @@
 @import url("./reset.css");
+
+:root {
+    --pomodoro-red: #fd4444;
+    --pomodoro-black: #363333;
+    --pomodoro-white: #fafafa;
+}

@@ -11,7 +11,7 @@ import { RouterOutlet } from '@angular/router';
 export class AppComponent {
   title = 'Pomodoro';
 
-  countdownValue = 1500;
+  countdownValue = 30;
   counterInterval: NodeJS.Timeout | undefined;
 
   displayCounter = this.setDisplayCounter(this.countdownValue);;
