@@ -17,9 +17,7 @@ export class AppComponent {
   displayCounter = this.setDisplayCounter(this.countdownValue);;
 
   public startCounter() {
-    console.log("Start counter");
     this.counterInterval = setInterval(() => {
-      console.log("Count down");
       this.countdownValue -= 1;
 
       if (this.countdownValue === 0) {

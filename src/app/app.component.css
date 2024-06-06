@@ -34,3 +34,16 @@ button {
 button:active {
     box-shadow: none;
 }
+
+.app-settings {
+    display: flex;
+    flex-direction: column;
+    gap: 21px;
+}
+
+.app-settings__field {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 2.4rem;
+}
