@@ -12,9 +12,23 @@ export class AppComponent {
   title = 'Pomodoro';
 
   countdownValue = 1500;
+  buttonCommand: string = "Start";
+  isRunning: boolean = false;
   counterInterval: NodeJS.Timeout | undefined;
 
   displayCounter = this.setDisplayCounter(this.countdownValue);;
+
+  public runCommand() {
+    if (this.isRunning) {
+      clearInterval(this.counterInterval);
+      this.isRunning = false;
+      this.buttonCommand = "Resume";
+    } else {
+      this.startCounter();
+      this.isRunning = true;
+      this.buttonCommand = "Pause";
+    }
+  }
 
   public startCounter() {
     this.counterInterval = setInterval(() => {
