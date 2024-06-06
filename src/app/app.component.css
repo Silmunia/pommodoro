@@ -1,5 +1,9 @@
 @import url("../styles.css");
 
+.app-title {
+    font-size: 4.8rem;
+}
+
 .counter-display {
     display: flex;
     flex-direction: column;
@@ -7,20 +11,16 @@
     gap: 10px;
 }
 
-h1 {
-    font-size: 4.8rem;
-}
-
-h2 {
+.counter-display__title {
     font-size: 3.2rem;
     text-decoration: underline;
 }
 
-h3 {
+.counter-display__value {
     font-size: 4.8rem;
 }
 
-button {
+.app-button {
     font-size: 2.8rem;
     background: var(--pomodoro-white);
     color: var(--pomodoro-black);
@@ -29,8 +29,42 @@ button {
     height: 59px;
     border-radius: 12px;
     box-shadow: 0 4px 8px 0 rgba(54, 51, 51, 0.65);
+    border-bottom: 3px solid #cccccc;
 }
 
-button:active {
+.app-button:active {
     box-shadow: none;
+    border-bottom: none;
+}
+
+.app-settings {
+    display: flex;
+    flex-direction: column;
+    gap: 21px;
+}
+
+.app-settings__field {
+    width: 270px;
+    height: 59px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 2.4rem;
+    color: var(--pomodoro-white);
+    border: 2px solid var(--pomodoro-white);
+    border-radius: 12px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.app-settings__field__input {
+    width: 45px;
+    height: 42px;
+    border: none;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 2.4rem;
+    background-color: var(--pomodoro-white);
+    color: var(--pomodoro-black);
 }
