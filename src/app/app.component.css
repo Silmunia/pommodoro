@@ -44,8 +44,27 @@
 }
 
 .app-settings__field {
+    width: 270px;
+    height: 59px;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     font-size: 2.4rem;
+    color: var(--pomodoro-white);
+    border: 2px solid var(--pomodoro-white);
+    border-radius: 12px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.app-settings__field__input {
+    width: 45px;
+    height: 42px;
+    border: none;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 2.4rem;
+    background-color: var(--pomodoro-white);
+    color: var(--pomodoro-black);
 }
