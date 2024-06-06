@@ -1,1 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("./reset.css");
+
+:root {
+    --pomodoro-red: #fd4444;
+    --pomodoro-black: #363333;
+    --pomodoro-white: #fafafa;
+    font-size: 62.5%;
+
+    background-color: var(--pomodoro-red);
+    color: var(--pomodoro-white);
+    font-family: sans-serif;
+}
+
+.app-root {
+    margin-top: 19px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+}
