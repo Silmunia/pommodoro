@@ -9,7 +9,7 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'Pommodoro';
+  title = 'Pomodoro';
 
   countdownValue = 120;
   counterInterval: NodeJS.Timeout | undefined;
