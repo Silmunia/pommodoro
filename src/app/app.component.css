@@ -24,4 +24,13 @@ button {
     font-size: 2.8rem;
     background: var(--pomodoro-white);
     color: var(--pomodoro-black);
+    border: none;
+    width: 138px;
+    height: 59px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px 0 rgba(54, 51, 51, 0.65);
+}
+
+button:active {
+    box-shadow: none;
 }
