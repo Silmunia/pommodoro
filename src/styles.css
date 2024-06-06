@@ -5,4 +5,7 @@
     --pomodoro-black: #363333;
     --pomodoro-white: #fafafa;
     font-size: 62.5%;
+
+    background-color: var(--pomodoro-red);
+    color: var(--pomodoro-white);
 }
