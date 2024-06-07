@@ -12,18 +12,28 @@ import { FormsModule } from '@angular/forms';
 export class AppComponent {
   title = 'Pomodoro';
 
-  inputSessionLength: string = "25";
-  sessionLength: number = 1500;
+  sessionCounter: number = 1;
+  breakCounter: number = 0;
 
-  countdownValue = 1500;
-  buttonCommand: string = "Start";
-  hasStartedSession: boolean = false;
-  isRunning: boolean = false;
+  inputSessionLength: string = "25";
+  inputShortBreakLength: string = "5";
+
+  cycleLengths: { [key: string]: number } = {
+    sessionLength: 1500,
+    shortBreakLength: 300
+  };
+
+  countdownValue = this.cycleLengths['sessionLength'];
   counterInterval: NodeJS.Timeout | undefined;
 
-  displayCounter = this.setDisplayCounter(this.countdownValue);
+  buttonCommand: string = "Start";
+  displayCounter = this.setDisplayCounter();
+  displaySession = "Session 1";
 
-  public settingsChanged(target: EventTarget | null) {
+  isRunningCycle: boolean = false;
+  isPaused: boolean = true;
+
+  public settingsChanged(target: EventTarget | null, fieldName: string) {
     if (target === null) {
       return;
     }
@@ -33,51 +43,68 @@ export class AppComponent {
     const parsedValue = inputElement.value.match(/^\d*$/gi);
     
     if (parsedValue === null || parsedValue[0] === "") {
-      inputElement.value = String(Math.floor(this.sessionLength/60));
+      inputElement.value = String(Math.floor(this.cycleLengths[fieldName]/60));
       return;
     }
 
-    this.sessionLength = 60*parseInt(inputElement.value);
+    this.cycleLengths[fieldName] = 60*parseInt(inputElement.value);
 
-    if (!this.hasStartedSession) {
-      this.countdownValue = this.sessionLength;
-      this.displayCounter = this.setDisplayCounter(this.countdownValue);
+    if (!this.isRunningCycle) {
+      this.countdownValue = this.cycleLengths[fieldName];
+      this.displayCounter = this.setDisplayCounter();
     }
   }
 
   public runCommand() {
-    if (this.isRunning) {
-      clearInterval(this.counterInterval);
-      this.isRunning = false;
-      this.buttonCommand = "Resume";
-    } else {
-      this.hasStartedSession =  true;
+    if (this.isPaused) {
+      this.isRunningCycle =  true;
+
       this.startCounter();
-      this.isRunning = true;
+      this.isPaused = false;
       this.buttonCommand = "Pause";
+    } else {
+      clearInterval(this.counterInterval);
+      this.isPaused = true;
+      this.buttonCommand = "Resume";
     }
   }
 
-  public startCounter() {
+  private startCounter() {
     this.counterInterval = setInterval(() => {
       this.countdownValue -= 1;
 
       if (this.countdownValue === 0) {
-        clearInterval(this.counterInterval);
-        this.hasStartedSession = false;
-        this.isRunning = false;
-        this.buttonCommand = "Start";
-        this.countdownValue = this.sessionLength;
-        this.displayCounter = this.setDisplayCounter(this.countdownValue);
+        this.finishCycle();
       }
   
-      this.displayCounter = this.setDisplayCounter(this.countdownValue);
+      this.displayCounter = this.setDisplayCounter();
     }, 1000);
   }
 
-  public setDisplayCounter(secondsRemaining: number): string {
-    const countdownMinutes = Math.floor(secondsRemaining / 60);
-    const countdownSeconds = secondsRemaining - 60*countdownMinutes;
+  private finishCycle() {
+    clearInterval(this.counterInterval);
+    this.isRunningCycle = false;
+    this.isPaused = true;
+    this.buttonCommand = "Start";
+    this.displayCounter = this.setDisplayCounter();
+    this.displaySession = this.setDisplaySession();
+  }
+
+  private setDisplaySession(): string {
+    if (this.sessionCounter > this.breakCounter) {
+      this.breakCounter += 1;
+      this.countdownValue = this.cycleLengths['shortBreakLength'];
+      return "Short Break";
+    }
+
+    this.sessionCounter += 1;
+    this.countdownValue = this.cycleLengths['sessionLength'];
+    return `Session ${this.sessionCounter}`;
+  }
+
+  private setDisplayCounter(): string {
+    const countdownMinutes = Math.floor(this.countdownValue / 60);
+    const countdownSeconds = this.countdownValue - 60*countdownMinutes;
 
     const displayCounterMinutes = countdownMinutes.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false});
 
