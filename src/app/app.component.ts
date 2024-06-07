@@ -16,11 +16,14 @@ export class AppComponent {
   breakCounter: number = 0;
 
   inputSessionLength: string = "25";
-  sessionLength: number = 1500;
+  inputShortBreakLength: string = "5";
 
-  shortBreakLength: number = 90;
+  cycleLengths: { [key: string]: number } = {
+    sessionLength: 1500,
+    shortBreakLength: 300
+  };
 
-  countdownValue = this.sessionLength;
+  countdownValue = this.cycleLengths['sessionLength'];
   counterInterval: NodeJS.Timeout | undefined;
 
   buttonCommand: string = "Start";
@@ -30,7 +33,7 @@ export class AppComponent {
   isRunningCycle: boolean = false;
   isPaused: boolean = true;
 
-  public settingsChanged(target: EventTarget | null) {
+  public settingsChanged(target: EventTarget | null, fieldName: string) {
     if (target === null) {
       return;
     }
@@ -40,14 +43,14 @@ export class AppComponent {
     const parsedValue = inputElement.value.match(/^\d*$/gi);
     
     if (parsedValue === null || parsedValue[0] === "") {
-      inputElement.value = String(Math.floor(this.sessionLength/60));
+      inputElement.value = String(Math.floor(this.cycleLengths[fieldName]/60));
       return;
     }
 
-    this.sessionLength = 60*parseInt(inputElement.value);
+    this.cycleLengths[fieldName] = 60*parseInt(inputElement.value);
 
     if (!this.isRunningCycle) {
-      this.countdownValue = this.sessionLength;
+      this.countdownValue = this.cycleLengths[fieldName];
       this.displayCounter = this.setDisplayCounter();
     }
   }
@@ -90,12 +93,12 @@ export class AppComponent {
   private setDisplaySession(): string {
     if (this.sessionCounter > this.breakCounter) {
       this.breakCounter += 1;
-      this.countdownValue = this.shortBreakLength;
+      this.countdownValue = this.cycleLengths['shortBreakLength'];
       return "Short Break";
     }
 
     this.sessionCounter += 1;
-    this.countdownValue = this.sessionLength;
+    this.countdownValue = this.cycleLengths['sessionLength'];
     return `Session ${this.sessionCounter}`;
   }
 

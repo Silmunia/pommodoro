@@ -12,12 +12,12 @@
 <div class="app-settings">
     <div class="app-settings__field">
         <p>Session</p>
-        <input class="app-settings__field__input" [(ngModel)]="inputSessionLength" (change)="settingsChanged($event.currentTarget)" type="text"/>
+        <input class="app-settings__field__input" [(ngModel)]="inputSessionLength" (change)="settingsChanged($event.currentTarget, 'sessionLength')" type="text"/>
     </div>
 
     <div class="app-settings__field">
         <p>Short Break</p>
-        <input class="app-settings__field__input" type="text"/>
+        <input class="app-settings__field__input" [(ngModel)]="inputShortBreakLength" (change)="settingsChanged($event.currentTarget, 'shortBreakLength')" type="text"/>
     </div>
 
     <div class="app-settings__field">
