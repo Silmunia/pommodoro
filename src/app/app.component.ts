@@ -51,10 +51,26 @@ export class AppComponent {
 
     this.cycleLengths[fieldName] = 60*parseInt(inputElement.value);
 
-    if (!this.isRunningCycle) {
+    if (!this.isRunningCycle && this.isCurrentCycle(fieldName)) {
       this.countdownValue = this.cycleLengths[fieldName];
       this.displayCounter = this.setDisplayCounter();
     }
+  }
+
+  private isCurrentCycle(cycleName: string): boolean {
+    if (cycleName === 'longBreakLength' && this.sessionCounter % 4 === 0 && this.sessionCounter === this.breakCounter) {
+      return true;
+    }
+    
+    if (cycleName === 'shortBreakLength' && this.sessionCounter === this.breakCounter) {
+      return true;
+    }
+
+    if (cycleName === 'sessionLength' && this.sessionCounter > this.breakCounter) {
+      return true;
+    }
+
+    return false;
   }
 
   public runCommand() {
