@@ -22,7 +22,7 @@
 
     <div class="app-settings__field">
         <p>Long Break</p>
-        <input class="app-settings__field__input" type="text"/>
+        <input class="app-settings__field__input" [(ngModel)]="inputLongBreakLength" (change)="settingsChanged($event.currentTarget, 'longBreakLength')" type="text"/>
     </div>
 </div>
 
