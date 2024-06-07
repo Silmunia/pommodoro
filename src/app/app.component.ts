@@ -13,9 +13,12 @@ export class AppComponent {
   title = 'Pomodoro';
 
   sessionCounter: number = 1;
+  breakCounter: number = 0;
 
   inputSessionLength: string = "25";
   sessionLength: number = 1500;
+
+  shortBreakLength: number = 90;
 
   countdownValue = this.sessionLength;
   counterInterval: NodeJS.Timeout | undefined;
@@ -80,13 +83,19 @@ export class AppComponent {
     this.isRunningCycle = false;
     this.isPaused = true;
     this.buttonCommand = "Start";
-    this.countdownValue = this.sessionLength;
     this.displayCounter = this.setDisplayCounter();
     this.displaySession = this.setDisplaySession();
   }
 
   private setDisplaySession(): string {
+    if (this.sessionCounter > this.breakCounter) {
+      this.breakCounter += 1;
+      this.countdownValue = this.shortBreakLength;
+      return "Short Break";
+    }
+
     this.sessionCounter += 1;
+    this.countdownValue = this.sessionLength;
     return `Session ${this.sessionCounter}`;
   }
 
