@@ -15,13 +15,14 @@ export class AppComponent {
   inputSessionLength: string = "25";
   sessionLength: number = 1500;
 
-  countdownValue = 1500;
-  buttonCommand: string = "Start";
-  hasStartedSession: boolean = false;
-  isRunning: boolean = false;
+  countdownValue = this.sessionLength;
   counterInterval: NodeJS.Timeout | undefined;
 
+  buttonCommand: string = "Start";
   displayCounter = this.setDisplayCounter(this.countdownValue);
+
+  isRunningCycle: boolean = false;
+  isPaused: boolean = true;
 
   public settingsChanged(target: EventTarget | null) {
     if (target === null) {
@@ -39,43 +40,48 @@ export class AppComponent {
 
     this.sessionLength = 60*parseInt(inputElement.value);
 
-    if (!this.hasStartedSession) {
+    if (!this.isRunningCycle) {
       this.countdownValue = this.sessionLength;
       this.displayCounter = this.setDisplayCounter(this.countdownValue);
     }
   }
 
   public runCommand() {
-    if (this.isRunning) {
-      clearInterval(this.counterInterval);
-      this.isRunning = false;
-      this.buttonCommand = "Resume";
-    } else {
-      this.hasStartedSession =  true;
+    if (this.isPaused) {
+      this.isRunningCycle =  true;
+
       this.startCounter();
-      this.isRunning = true;
+      this.isPaused = false;
       this.buttonCommand = "Pause";
+    } else {
+      clearInterval(this.counterInterval);
+      this.isPaused = true;
+      this.buttonCommand = "Resume";
     }
   }
 
-  public startCounter() {
+  private startCounter() {
     this.counterInterval = setInterval(() => {
       this.countdownValue -= 1;
 
       if (this.countdownValue === 0) {
-        clearInterval(this.counterInterval);
-        this.hasStartedSession = false;
-        this.isRunning = false;
-        this.buttonCommand = "Start";
-        this.countdownValue = this.sessionLength;
-        this.displayCounter = this.setDisplayCounter(this.countdownValue);
+        this.finishCycle();
       }
   
       this.displayCounter = this.setDisplayCounter(this.countdownValue);
     }, 1000);
   }
 
-  public setDisplayCounter(secondsRemaining: number): string {
+  private finishCycle() {
+    clearInterval(this.counterInterval);
+    this.isRunningCycle = false;
+    this.isPaused = true;
+    this.buttonCommand = "Start";
+    this.countdownValue = this.sessionLength;
+    this.displayCounter = this.setDisplayCounter(this.countdownValue);
+  }
+
+  private setDisplayCounter(secondsRemaining: number): string {
     const countdownMinutes = Math.floor(secondsRemaining / 60);
     const countdownSeconds = secondsRemaining - 60*countdownMinutes;
 
