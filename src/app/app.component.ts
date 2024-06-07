@@ -17,10 +17,12 @@ export class AppComponent {
 
   inputSessionLength: string = "25";
   inputShortBreakLength: string = "5";
+  inputLongBreakLength: string = "15";
 
   cycleLengths: { [key: string]: number } = {
     sessionLength: 1500,
-    shortBreakLength: 300
+    shortBreakLength: 300,
+    longBreakLength: 900
   };
 
   countdownValue = this.cycleLengths['sessionLength'];
@@ -28,7 +30,7 @@ export class AppComponent {
 
   buttonCommand: string = "Start";
   displayCounter = this.setDisplayCounter();
-  displaySession = "Session 1";
+  displaySession = `Session ${this.sessionCounter}`;
 
   isRunningCycle: boolean = false;
   isPaused: boolean = true;
@@ -91,6 +93,12 @@ export class AppComponent {
   }
 
   private setDisplaySession(): string {
+    if (this.sessionCounter % 4 === 0 && this.sessionCounter > this.breakCounter) {
+      this.breakCounter += 1;
+      this.countdownValue = this.cycleLengths['longBreakLength'];
+      return "Long Break";
+    }
+
     if (this.sessionCounter > this.breakCounter) {
       this.breakCounter += 1;
       this.countdownValue = this.cycleLengths['shortBreakLength'];
