@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 export class AppComponent {
   title = 'Pomodoro';
 
+  sessionCounter: number = 1;
+
   inputSessionLength: string = "25";
   sessionLength: number = 1500;
 
@@ -19,7 +21,8 @@ export class AppComponent {
   counterInterval: NodeJS.Timeout | undefined;
 
   buttonCommand: string = "Start";
-  displayCounter = this.setDisplayCounter(this.countdownValue);
+  displayCounter = this.setDisplayCounter();
+  displaySession = "Session 1";
 
   isRunningCycle: boolean = false;
   isPaused: boolean = true;
@@ -42,7 +45,7 @@ export class AppComponent {
 
     if (!this.isRunningCycle) {
       this.countdownValue = this.sessionLength;
-      this.displayCounter = this.setDisplayCounter(this.countdownValue);
+      this.displayCounter = this.setDisplayCounter();
     }
   }
 
@@ -68,7 +71,7 @@ export class AppComponent {
         this.finishCycle();
       }
   
-      this.displayCounter = this.setDisplayCounter(this.countdownValue);
+      this.displayCounter = this.setDisplayCounter();
     }, 1000);
   }
 
@@ -78,12 +81,18 @@ export class AppComponent {
     this.isPaused = true;
     this.buttonCommand = "Start";
     this.countdownValue = this.sessionLength;
-    this.displayCounter = this.setDisplayCounter(this.countdownValue);
+    this.displayCounter = this.setDisplayCounter();
+    this.displaySession = this.setDisplaySession();
   }
 
-  private setDisplayCounter(secondsRemaining: number): string {
-    const countdownMinutes = Math.floor(secondsRemaining / 60);
-    const countdownSeconds = secondsRemaining - 60*countdownMinutes;
+  private setDisplaySession(): string {
+    this.sessionCounter += 1;
+    return `Session ${this.sessionCounter}`;
+  }
+
+  private setDisplayCounter(): string {
+    const countdownMinutes = Math.floor(this.countdownValue / 60);
+    const countdownSeconds = this.countdownValue - 60*countdownMinutes;
 
     const displayCounterMinutes = countdownMinutes.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping: false});
 
