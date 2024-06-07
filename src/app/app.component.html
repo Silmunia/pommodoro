@@ -7,12 +7,12 @@
     <h3 class="counter-display__value">{{displayCounter}}</h3>
 </div>
 
-<button class="app-button" (click)="startCounter()">Start</button>
+<button class="app-button" (click)="runCommand()">{{buttonCommand}}</button>
 
 <div class="app-settings">
     <div class="app-settings__field">
         <p>Session</p>
-        <input class="app-settings__field__input" type="text"/>
+        <input class="app-settings__field__input" [(ngModel)]="inputSessionLength" (change)="settingsChanged($event.currentTarget)" type="text"/>
     </div>
 
     <div class="app-settings__field">
