@@ -1,12 +1,31 @@
 
-<h1>{{title}}</h1>
+<h1 class="app-title">{{title}}</h1>
 
 <div class="counter-display">
-    <h2>Session 1</h2>
+    <h2 class="counter-display__title">{{displaySession}}</h2>
 
-    <h3>{{displayCounter}}</h3>
+    <h3 class="counter-display__value">{{displayCounter}}</h3>
 </div>
 
-<button (click)="startCounter()">Start</button>
+<button class="app-button" (click)="runCommand()">{{buttonCommand}}</button>
+
+<div class="app-settings">
+    <div class="app-settings__field">
+        <p>Session</p>
+        <input class="app-settings__field__input" [(ngModel)]="inputSessionLength" (change)="settingsChanged($event.currentTarget, 'sessionLength')" type="text"/>
+    </div>
+
+    <div class="app-settings__field">
+        <p>Short Break</p>
+        <input class="app-settings__field__input" [(ngModel)]="inputShortBreakLength" (change)="settingsChanged($event.currentTarget, 'shortBreakLength')" type="text"/>
+    </div>
+
+    <div class="app-settings__field">
+        <p>Long Break</p>
+        <input class="app-settings__field__input" [(ngModel)]="inputLongBreakLength" (change)="settingsChanged($event.currentTarget, 'longBreakLength')" type="text"/>
+    </div>
+</div>
+
+<audio #audioPlayer src="assets/Alarm.mp3" preload="auto" type="audio/mpeg"></audio>
 
 <router-outlet />
