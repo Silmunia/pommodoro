@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  @ViewChild('audioPlayer', { static: false }) audioPlayer!: ElementRef;
+
   title = 'Pomodoro';
 
   sessionCounter: number = 1;
@@ -75,6 +77,7 @@ export class AppComponent {
 
   public runCommand() {
     if (this.isPaused) {
+      this.stopAlarm();
       this.isRunningCycle =  true;
 
       this.startCounter();
@@ -100,12 +103,23 @@ export class AppComponent {
   }
 
   private finishCycle() {
+    this.playAlarm();
     clearInterval(this.counterInterval);
     this.isRunningCycle = false;
     this.isPaused = true;
     this.buttonCommand = "Start";
     this.displayCounter = this.setDisplayCounter();
     this.displaySession = this.setDisplaySession();
+  }
+
+  private playAlarm() {
+    this.audioPlayer.nativeElement.loop = false;
+    this.audioPlayer.nativeElement.play();
+  }
+
+  private stopAlarm() {
+    this.audioPlayer.nativeElement.pause();
+    this.audioPlayer.nativeElement.currentTime = 0;
   }
 
   private setDisplaySession(): string {
