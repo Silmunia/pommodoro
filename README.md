@@ -44,7 +44,7 @@
 Pomodoro is a web application following the principles of [the Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro_Technique). This project was developed for personal use while studying, while also being an opportunity to make an Angular project with sounds, timers, and a responsive design.
 
 <div style="text-align: center;">
-![Pomodoro Application Mobile Screenshot](./src/assets/Screenshot Mobile.png)
+  <img src="./src/assets/Screenshot Mobile.png" alt="Pomodoro Application Mobile Screenshot">
 </div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
