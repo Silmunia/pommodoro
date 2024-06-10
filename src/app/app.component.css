@@ -68,3 +68,12 @@
     background-color: var(--pomodoro-white);
     color: var(--pomodoro-black);
 }
+
+.source-text {
+    font-size: 1.4rem;
+    color: var(--pomodoro-white);
+}
+
+:any-link {
+    color: var(--pomodoro-white);
+}
