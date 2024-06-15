@@ -9,22 +9,22 @@
 
 <button class="app-button" (click)="runCommand()">{{buttonCommand}}</button>
 
-<div class="app-settings">
+<form autocomplete="off" class="app-settings">
     <div class="app-settings__field">
         <p>Session</p>
-        <input class="app-settings__field__input" [(ngModel)]="inputSessionLength" (change)="settingsChanged($event.currentTarget, 'sessionLength')" type="text"/>
+        <input class="app-settings__field__input" name="sessionLength" [(ngModel)]="inputSessionLength" (change)="settingsChanged($event.currentTarget, 'sessionLength')" type="text"/>
     </div>
 
     <div class="app-settings__field">
         <p>Short Break</p>
-        <input class="app-settings__field__input" [(ngModel)]="inputShortBreakLength" (change)="settingsChanged($event.currentTarget, 'shortBreakLength')" type="text"/>
+        <input class="app-settings__field__input" name="shortBreakLength" [(ngModel)]="inputShortBreakLength" (change)="settingsChanged($event.currentTarget, 'shortBreakLength')" type="text"/>
     </div>
 
     <div class="app-settings__field">
         <p>Long Break</p>
-        <input class="app-settings__field__input" [(ngModel)]="inputLongBreakLength" (change)="settingsChanged($event.currentTarget, 'longBreakLength')" type="text"/>
+        <input class="app-settings__field__input" name="longBreakLength" [(ngModel)]="inputLongBreakLength" (change)="settingsChanged($event.currentTarget, 'longBreakLength')" type="text"/>
     </div>
-</div>
+</form>
 
 <audio #audioPlayer src="assets/Alarm.mp3" preload="auto" type="audio/mpeg"></audio>
 
