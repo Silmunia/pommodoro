@@ -46,12 +46,13 @@ export class AppComponent {
 
     const parsedValue = inputElement.value.match(/^\d*$/gi);
     
-    if (parsedValue === null || parsedValue[0] === "") {
+    if (parsedValue === null || parsedValue[0] === "" || parseInt(parsedValue[0]) === 0) {
       inputElement.value = String(Math.floor(this.cycleLengths[fieldName]/60));
       return;
     }
 
     this.cycleLengths[fieldName] = 60*parseInt(inputElement.value);
+    inputElement.value = String(Math.floor(this.cycleLengths[fieldName] / 60));
 
     if (!this.isRunningCycle && this.isCurrentCycle(fieldName)) {
       this.countdownValue = this.cycleLengths[fieldName];
